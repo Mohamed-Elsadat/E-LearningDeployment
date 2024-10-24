@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    environment {
+        KUBECONFIG = '/var/lib/jenkins/.kube/config' // Make sure this path is correct
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/moheladwy/E-LearningDeployment'
+            }
+        }
+
+        stage('Run Ansible Playbook') {
+            steps {
+                ansiblePlaybook(
+                    playbook: 'ansible/apply_k8s_resources.yaml',
+                    inventory: 'ansible/inventory.ini'
+                )
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+            echo "Workspace cleaned up after pipeline completion."
+        }
+
+        failure {
+            echo "Pipeline failed."
+        }
+
+        success {
+            echo "Pipeline completed successfully."
+        }
+    }
+}

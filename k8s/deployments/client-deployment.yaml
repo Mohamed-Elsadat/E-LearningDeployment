@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: client-frontend
+    namespace: online-learning-platform-namespace
+spec:
+    replicas: 1
+    strategy:
+        type: RollingUpdate
+        rollingUpdate:
+            maxUnavailable: 1
+            maxSurge: 1
+    selector:
+        matchLabels:
+            app: online-learning-platform-frontend
+    template:
+        metadata:
+            labels:
+                app: online-learning-platform-frontend
+        spec:
+            containers:
+                - name: client-frontend
+                  image: only1adwy/client:latest
+                  imagePullPolicy: Always
+                  env:
+                      - name: NEXT_PUBLIC_COURSE
+                        value: "192.168.49.2"
+                      - name: NEXT_PUBLIC_ACCOUNT
+                        value: "192.168.49.2"
+                  ports:
+                      - containerPort: 3000
+                  resources:
+                      limits:
+                          memory: "1024Mi"
+                          cpu: "500m"
+                      requests:
+                          memory: "250Mi"
+                          cpu: "125m"
