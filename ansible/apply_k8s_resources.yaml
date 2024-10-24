@@ -3,10 +3,10 @@
   become: true # Run with sudo if necessary
 
   environment:
-      KUBECONFIG: "/home/eladwy/.kube/config" # Path to the kubeconfig file
+      KUBECONFIG: "/home/mohamedelsadat/.kube/config" # Path to the kubeconfig file
 
   vars:
-      k8s_folder: "/home/eladwy/github/E-LearningDeployment/k8s" # Path where the k8s folder is located
+      k8s_folder: "/home/mohamedelsadat/Desktop/E-LearningDeployment-main/k8s" # Path where the k8s folder is located
       ansible_python_interpreter: /usr/bin/python3
 
   tasks:
